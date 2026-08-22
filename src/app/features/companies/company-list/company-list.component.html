@@ -1,0 +1,130 @@
+<section class="companies-page">
+
+  <header class="page-header">
+
+    <div>
+      <h1>Companies</h1>
+
+      <p>
+        Manage companies and their job vacancies.
+      </p>
+    </div>
+
+    <a
+      routerLink="/companies/new"
+      class="button primary"
+    >
+      Add company
+    </a>
+
+  </header>
+
+
+  @if (loading()) {
+
+    <p class="status">
+      Loading companies...
+    </p>
+
+  }
+
+
+  @if (error()) {
+
+    <p class="status error">
+      {{ error() }}
+    </p>
+
+  }
+
+
+  @if (!loading() && !error()) {
+
+    @if (companies().length === 0) {
+
+      <div class="empty-state">
+
+        <h2>No companies</h2>
+
+        <p>
+          There are currently no companies.
+        </p>
+
+        <a
+          routerLink="/companies/new"
+          class="button primary"
+        >
+          Add company
+        </a>
+
+      </div>
+
+    } @else {
+
+      <div class="company-list">
+
+        @for (
+          company of companies();
+          track company.id
+        ) {
+
+          <article class="company-card">
+
+            <div class="company-info">
+
+              <h2>
+                {{ company.name }}
+              </h2>
+
+              <p>
+                {{ company.address }}
+              </p>
+
+            </div>
+
+
+            <div class="actions">
+
+              <a
+                [routerLink]="[
+                  '/companies',
+                  company.id,
+                  'vacancies'
+                ]"
+                class="button primary"
+              >
+                View vacancies
+              </a>
+
+              <a
+                [routerLink]="[
+                  '/companies',
+                  company.id,
+                  'edit'
+                ]"
+                class="button"
+              >
+                Edit
+              </a>
+
+              <button
+                type="button"
+                class="button danger"
+                (click)="deleteCompany(company)"
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </article>
+
+        }
+
+      </div>
+
+    }
+
+  }
+
+</section>

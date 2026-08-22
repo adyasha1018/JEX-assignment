@@ -1,0 +1,60 @@
+<div class="app-shell">
+
+  <header class="app-header">
+
+    <div class="app-header__inner">
+
+      <a
+        routerLink="/companies"
+        class="app-brand"
+      >
+
+        <span class="app-brand__logo">
+          J
+        </span>
+
+        <span class="app-brand__name">
+          JEX
+        </span>
+
+      </a>
+
+
+      <nav class="app-navigation">
+
+        <a
+          routerLink="/companies"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{
+            exact: false
+          }"
+        >
+          Companies
+        </a>
+
+      </nav>
+
+
+      <div class="app-user">
+
+        <div class="app-user__avatar">
+          A
+        </div>
+
+        <div class="app-user__details">
+          <strong>Back-office</strong>
+          <span>Administrator</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <main class="app-main">
+    <router-outlet />
+  </main>
+
+</div>

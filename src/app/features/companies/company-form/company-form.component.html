@@ -1,0 +1,114 @@
+<section class="company-form-page">
+
+  <header class="page-header">
+    <div>
+      <h1>
+        {{ isEditMode ? 'Edit company' : 'Create company' }}
+      </h1>
+
+      <p>
+        {{ isEditMode
+          ? 'Update the company information.'
+          : 'Add a new company.' }}
+      </p>
+    </div>
+  </header>
+
+  @if (loading()) {
+
+    <p class="status">
+      Loading company...
+    </p>
+
+  } @else {
+
+    <form
+      class="company-form"
+      [formGroup]="companyForm"
+      (ngSubmit)="onSubmit()"
+    >
+
+      <div class="form-field">
+
+        <label for="name">
+          Name
+        </label>
+
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          placeholder="Company name"
+        />
+
+        @if (
+          companyForm.controls.name.invalid &&
+          companyForm.controls.name.touched
+        ) {
+          <small class="validation-error">
+            Company name is required.
+          </small>
+        }
+
+      </div>
+
+      <div class="form-field">
+
+        <label for="address">
+          Address
+        </label>
+
+        <input
+          id="address"
+          type="text"
+          formControlName="address"
+          placeholder="Company address"
+        />
+
+        @if (
+          companyForm.controls.address.invalid &&
+          companyForm.controls.address.touched
+        ) {
+          <small class="validation-error">
+            Company address is required.
+          </small>
+        }
+
+      </div>
+
+      @if (error()) {
+        <p class="status error">
+          {{ error() }}
+        </p>
+      }
+
+      <div class="form-actions">
+
+        <a
+          routerLink="/companies"
+          class="button secondary"
+        >
+          Cancel
+        </a>
+
+        <button
+          type="submit"
+          class="button primary"
+          [disabled]="saving()"
+        >
+          @if (saving()) {
+            Saving...
+          } @else if (isEditMode) {
+            Update company
+          } @else {
+            Create company
+          }
+        </button>
+
+      </div>
+
+    </form>
+
+  }
+
+</section>

@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:JEX-assignment": "node dist/JEX-assignment/server/server.mjs"
+    "serve:ssr:JEX-assignment": "node dist/JEX-assignment/server/server.mjs",
+    "api": "json-server --watch src/assets/mock/mockData.json --port 3000"
   },
   "private": true,
   "packageManager": "npm@11.17.0",

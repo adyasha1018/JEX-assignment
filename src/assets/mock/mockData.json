@@ -1,0 +1,88 @@
+{
+  "companies": [
+    {
+      "id": "2",
+      "name": "Tech Solution B.V.",
+      "address": "Innovation Avenue 25, Amsterdam"
+    },
+    {
+      "id": "Wflf690Sfl4",
+      "name": "Rotterdam Tech Innovations B.V.",
+      "address": "Rotterdam Central Station, 9000 AA"
+    },
+    {
+      "name": "Amsterdam Tech Innovations B.V.",
+      "address": "Amsterdam Central Station, 2700 AM",
+      "id": "FTyzf4fA3sM"
+    }
+  ],
+  "vacancies": [
+    {
+      "id": "1",
+      "title": "Senior Frontend Developer",
+      "description": "Develop and maintain modern web applications.",
+      "companyId": null
+    },
+    {
+      "id": "v4_mdZHT68U",
+      "title": "Senior DevOps Engineer",
+      "description": "Can set up Azure pipeline for the platform",
+      "companyId": "Wflf690Sfl4"
+    },
+    {
+      "id": "rMn680TcAuk",
+      "title": "Senior Product Owner",
+      "description": "Can analyse the product requirement and expain the team in technical terms",
+      "companyId": "2"
+    },
+    {
+      "title": "Senior Frontend Developer",
+      "description": "Create modern web applications",
+      "companyId": null,
+      "id": "JWv3pwJTHf0"
+    },
+    {
+      "title": "Head of Operations",
+      "description": "Should manage all operations and handle a team of 5 people",
+      "companyId": null,
+      "id": "Y2Lk-vzPq4g"
+    },
+    {
+      "title": "Junior UX",
+      "description": "Design basic figma",
+      "companyId": null,
+      "id": "0cOmiqex__E"
+    },
+    {
+      "title": "UX engineer ",
+      "description": "Create UX screen for web application",
+      "companyId": null,
+      "id": "UZ1gWOGvSLo"
+    },
+    {
+      "title": "Senior Software Engineer",
+      "description": "Senior Software Engineer with ability to  mentor",
+      "companyId": null,
+      "id": "ufZTthSUPgE"
+    },
+    {
+      "title": "Scrum Master",
+      "description": "Maintain Agile Methodology",
+      "companyId": "Wflf690Sfl4",
+      "id": "GBszXQcHxqU"
+    },
+    {
+      "id": "Gw51BLcniR0",
+      "title": "Senior Software Engineer",
+      "description": "Review and lead junior members",
+      "companyId": "2"
+    },
+    {
+      "id": "cIRqbAZ-iXU",
+      "title": "Senior Devops Engineer",
+      "description": "Create Azure pipeline for the current application",
+      "companyId": "FTyzf4fA3sM"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
