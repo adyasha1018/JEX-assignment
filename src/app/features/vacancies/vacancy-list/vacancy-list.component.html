@@ -1,60 +1,34 @@
 <section class="vacancies-page">
-
   <header class="page-header">
-
     <div>
       <h1>Job vacancies</h1>
-      <p>
-        Manage job vacancies and their associated companies.
-      </p>
+      <p>Manage job vacancies and their associated companies.</p>
     </div>
 
-    <a
-      routerLink="/vacancies/new"
-      class="button primary"
-    >
+    <a routerLink="/vacancies/new" class="button primary">
+      <span class="button-icon" aria-hidden="true">+</span>
       Add vacancy
     </a>
-
   </header>
 
   @if (loading()) {
-
-    <p class="status">
-      Loading vacancies...
-    </p>
-
+    <p class="status">Loading vacancies...</p>
   }
 
   @if (error()) {
-
     <p class="status error">
       {{ error() }}
     </p>
-
   }
 
   @if (!loading() && !error()) {
-
     @if (vacancies().length === 0) {
-
-      <p class="status">
-        No vacancies found.
-      </p>
-
+      <p class="status">No vacancies found.</p>
     } @else {
-
       <div class="vacancy-list">
-
-        @for (
-          vacancy of vacancies();
-          track vacancy.id
-        ) {
-
+        @for (vacancy of vacancies(); track vacancy.id) {
           <article class="vacancy-card">
-
             <div class="vacancy-info">
-
               <h2>
                 {{ vacancy.title }}
               </h2>
@@ -66,40 +40,10 @@
               <p>
                 {{ vacancy.description }}
               </p>
-
             </div>
-
-            <div class="actions">
-
-              <a
-                [routerLink]="[
-                  '/vacancies',
-                  vacancy.id,
-                  'edit'
-                ]"
-                class="button"
-              >
-                Edit
-              </a>
-
-              <button
-                type="button"
-                class="button danger"
-                (click)="deleteVacancy(vacancy)"
-              >
-                Delete
-              </button>
-
-            </div>
-
           </article>
-
         }
-
       </div>
-
     }
-
   }
-
 </section>

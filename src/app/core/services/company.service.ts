@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Company } from '../models/company.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CompanyService {
   private readonly http = inject(HttpClient);
@@ -19,21 +19,15 @@ export class CompanyService {
     return this.http.post<Company>(this.apiUrl, company);
   }
 
-getCompany(id: string): Observable<Company> {
-  return this.http.get<Company>(`${this.apiUrl}/${id}`);
-}
+  getCompany(id: string): Observable<Company> {
+    return this.http.get<Company>(`${this.apiUrl}/${id}`);
+  }
 
-updateCompany(company: Company): Observable<Company> {
-  return this.http.put<Company>(
-    `${this.apiUrl}/${company.id}`,
-    company
-  );
-}
-
+  updateCompany(company: Company): Observable<Company> {
+    return this.http.put<Company>(`${this.apiUrl}/${company.id}`, company);
+  }
 
   deleteCompany(id: string): Observable<void> {
-    return this.http.delete<void>(
-      `${this.apiUrl}/${id}`
-    );
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

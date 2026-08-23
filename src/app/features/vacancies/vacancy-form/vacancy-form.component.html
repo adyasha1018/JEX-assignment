@@ -1,20 +1,13 @@
 <div class="page-shell">
-
   <header class="page-header">
-
     <div class="header-navigation">
-      <button
-        type="button"
-        class="back-button"
-        (click)="cancel()"
-      >
+      <button type="button" class="back-button" (click)="cancel()">
         <span class="back-icon">←</span>
         <span>Back to vacancies</span>
       </button>
     </div>
 
     <div class="header-content">
-
       <div>
         <div class="eyebrow">
           {{ isEditMode ? 'VACANCY MANAGEMENT' : 'NEW VACANCY' }}
@@ -25,75 +18,53 @@
         </h1>
 
         <p>
-          {{ isEditMode
-            ? 'Update the vacancy details and keep the position information current.'
-            : 'Create a new position and associate it with the selected company.'
+          {{
+            isEditMode
+              ? 'Update the vacancy details and keep the position information current.'
+              : 'Create a new position and associate it with the selected company.'
           }}
         </p>
       </div>
-
     </div>
-
   </header>
 
-
   <main class="page-content">
-
     @if (company(); as currentCompany) {
-
       <section class="company-card">
-
         <div class="company-card__accent"></div>
 
         <div class="company-card__content">
-
           <div class="company-avatar">
             {{ currentCompany.name.charAt(0).toUpperCase() }}
           </div>
 
           <div class="company-info">
-
-            <span class="company-label">
-              Creating vacancy for
-            </span>
+            <span class="company-label"> Creating vacancy for </span>
 
             <h2>
               {{ currentCompany.name }}
             </h2>
 
             <div class="company-address">
-
-              <span class="address-icon">
-                ⌖
-              </span>
+              <span class="address-icon"> ⌖ </span>
 
               <span>
                 {{ currentCompany.address }}
               </span>
-
             </div>
-
           </div>
 
           <div class="company-status">
             <span class="status-dot"></span>
             Active company
           </div>
-
         </div>
-
       </section>
-
     }
 
-
     @if (error()) {
-
       <div class="alert alert--error">
-
-        <div class="alert__icon">
-          !
-        </div>
+        <div class="alert__icon">!</div>
 
         <div>
           <strong>Something went wrong</strong>
@@ -102,61 +73,69 @@
             {{ error() }}
           </p>
         </div>
-
       </div>
-
     }
 
-
     @if (loading()) {
-
       <section class="form-card form-card--loading">
-
         <div class="skeleton skeleton--title"></div>
 
         <div class="skeleton skeleton--input"></div>
 
         <div class="skeleton skeleton--textarea"></div>
-
       </section>
-
     } @else {
-
       <section class="form-card">
-
         <div class="form-card__header">
-
           <div>
             <h2>Vacancy details</h2>
 
             <p>
-              Provide the information candidates and internal
-              teams need to understand this position.
+              Provide the information candidates and internal teams need to understand this
+              position.
             </p>
           </div>
 
-          <span class="required-note">
-            * Required
-          </span>
-
+          <span class="required-note"> * Required </span>
         </div>
 
+        <form class="vacancy-form" [formGroup]="vacancyForm" (ngSubmit)="submit()">
+          @if (!companyId() && !isEditMode) {
+            <div class="form-field">
+              <label for="company">
+                Company
+                <span>*</span>
+              </label>
 
-        <form
-          [formGroup]="vacancyForm"
-          (ngSubmit)="submit()"
-          class="vacancy-form"
-        >
+              <select
+                id="company"
+                [value]="companyId() ?? ''"
+                (change)="onCompanySelected($any($event.target).value)"
+              >
+                <option value="">Select a company</option>
+
+                @for (availableCompany of companies(); track availableCompany.id) {
+                  <option [value]="availableCompany.id">
+                    {{ availableCompany.name }}
+                  </option>
+                }
+              </select>
+
+              @if (error() === 'Company could not be identified.') {
+                <span class="field-error"> Please select a company. </span>
+              } @else {
+                <span class="field-hint"> Choose the company offering this position. </span>
+              }
+            </div>
+          }
 
           <div class="form-field">
-
             <label for="title">
               Vacancy title
               <span>*</span>
             </label>
 
             <div class="input-wrapper">
-
               <input
                 id="title"
                 type="text"
@@ -164,42 +143,23 @@
                 placeholder="e.g. Senior Frontend Developer"
                 autocomplete="off"
               />
-
             </div>
 
-            @if (
-              vacancyForm.controls.title.touched &&
-              vacancyForm.controls.title.invalid
-            ) {
-
-              <span class="field-error">
-                Vacancy title is required.
-              </span>
-
+            @if (vacancyForm.controls.title.touched && vacancyForm.controls.title.invalid) {
+              <span class="field-error"> Vacancy title is required. </span>
             } @else {
-
-              <span class="field-hint">
-                Use a clear and recognizable job title.
-              </span>
-
+              <span class="field-hint"> Use a clear and recognizable job title. </span>
             }
-
           </div>
 
-
           <div class="form-field">
-
             <div class="field-header">
-
               <label for="description">
                 Description
                 <span>*</span>
               </label>
 
-              <span class="character-hint">
-                Describe the role clearly
-              </span>
-
+              <span class="character-hint"> Describe the role clearly </span>
             </div>
 
             <textarea
@@ -210,45 +170,26 @@
             ></textarea>
 
             @if (
-              vacancyForm.controls.description.touched &&
-              vacancyForm.controls.description.invalid
+              vacancyForm.controls.description.touched && vacancyForm.controls.description.invalid
             ) {
-
-              <span class="field-error">
-                Vacancy description is required.
-              </span>
-
+              <span class="field-error"> Vacancy description is required. </span>
             } @else {
-
               <span class="field-hint">
-                Include the main responsibilities, expectations
-                and requirements.
+                Include the main responsibilities, expectations and requirements.
               </span>
-
             }
-
           </div>
-
 
           <div class="form-divider"></div>
 
-
           <footer class="form-footer">
-
             <div class="form-footer__info">
+              <span class="info-icon"> i </span>
 
-              <span class="info-icon">
-                i
-              </span>
-
-              <span>
-                Changes will be saved to the vacancy database.
-              </span>
-
+              <span> Changes will be saved to the vacancy database. </span>
             </div>
 
             <div class="form-actions">
-
               <button
                 type="button"
                 class="button button--secondary"
@@ -258,45 +199,23 @@
                 Cancel
               </button>
 
-              <button
-                type="submit"
-                class="button button--primary"
-                [disabled]="saving()"
-              >
-
+              <button type="submit" class="button button--primary" [disabled]="saving()">
                 @if (saving()) {
-
                   <span class="spinner"></span>
 
                   Saving...
-
                 } @else {
-
                   <span>
-                    {{ isEditMode
-                      ? 'Save changes'
-                      : 'Create vacancy'
-                    }}
+                    {{ isEditMode ? 'Save changes' : 'Create vacancy' }}
                   </span>
 
-                  <span class="button-arrow">
-                    →
-                  </span>
-
+                  <span class="button-arrow"> → </span>
                 }
-
               </button>
-
             </div>
-
           </footer>
-
         </form>
-
       </section>
-
     }
-
   </main>
-
 </div>

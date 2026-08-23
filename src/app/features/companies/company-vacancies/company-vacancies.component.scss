@@ -113,7 +113,7 @@ h1 {
 
   padding: 0.6rem 1rem;
 
-  border: 1px solid #d1d5db;
+  border: 2px solid #94a3b8;
   border-radius: 6px;
 
   background: #fff;
@@ -129,13 +129,18 @@ h1 {
 
   box-sizing: border-box;
 
+  &:focus-visible {
+    outline: 3px solid rgb(37 99 235 / 30%);
+    outline-offset: 2px;
+  }
+
   &:hover {
     background: #f5f5f5;
   }
 }
 
 .button.primary {
-  border-color: #2563eb;
+  border-color: #1d4ed8;
 
   background: #2563eb;
   color: #fff;
@@ -146,7 +151,7 @@ h1 {
 }
 
 .button.danger {
-  border-color: #dc2626;
+  border-color: #b91c1c;
 
   background: #dc2626;
   color: #fff;

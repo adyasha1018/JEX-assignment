@@ -59,9 +59,12 @@
 }
 
 .button {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
   padding: 0.65rem 1rem;
-  border: 1px solid #ccc;
+  border: 2px solid #94a3b8;
   border-radius: 6px;
   background: white;
   color: #222;
@@ -69,13 +72,18 @@
   cursor: pointer;
   font: inherit;
 
+  &:focus-visible {
+    outline: 3px solid rgb(37 99 235 / 30%);
+    outline-offset: 2px;
+  }
+
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
   }
 
   &.primary {
-    border-color: #2563eb;
+    border-color: #1d4ed8;
     background: #2563eb;
     color: white;
 

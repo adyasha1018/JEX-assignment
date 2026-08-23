@@ -20,11 +20,9 @@
   --danger: #dc2626;
   --danger-soft: #fef2f2;
 
-  --shadow-sm:
-    0 1px 2px rgb(15 23 42 / 4%);
+  --shadow-sm: 0 1px 2px rgb(15 23 42 / 4%);
 
-  --shadow-md:
-    0 8px 24px rgb(15 23 42 / 6%);
+  --shadow-md: 0 8px 24px rgb(15 23 42 / 6%);
 
   --radius-sm: 6px;
   --radius-md: 10px;
@@ -32,7 +30,6 @@
 
   display: block;
 }
-
 
 /* =========================================================
    PAGE
@@ -42,26 +39,17 @@
   min-height: 100vh;
 
   background:
-    radial-gradient(
-      circle at 50% -20%,
-      rgb(99 102 241 / 8%),
-      transparent 35%
-    ),
-    var(--page-bg);
+    radial-gradient(circle at 50% -20%, rgb(99 102 241 / 8%), transparent 35%), var(--page-bg);
 
   color: var(--text-primary);
 }
 
 .page-content,
 .page-header {
-  width: min(
-    calc(100% - 48px),
-    960px
-  );
+  width: min(calc(100% - 48px), 960px);
 
   margin-inline: auto;
 }
-
 
 /* =========================================================
    HEADER
@@ -141,11 +129,7 @@
 
   color: var(--text-primary);
 
-  font-size: clamp(
-    28px,
-    4vw,
-    38px
-  );
+  font-size: clamp(28px, 4vw, 38px);
 
   font-weight: 700;
 
@@ -166,7 +150,6 @@
   line-height: 1.6;
 }
 
-
 /* =========================================================
    CONTENT
    ========================================================= */
@@ -174,7 +157,6 @@
 .page-content {
   padding-bottom: 64px;
 }
-
 
 /* =========================================================
    COMPANY CONTEXT
@@ -203,12 +185,7 @@
 
   width: 4px;
 
-  background:
-    linear-gradient(
-      180deg,
-      #6366f1,
-      #8b5cf6
-    );
+  background: linear-gradient(180deg, #6366f1, #8b5cf6);
 }
 
 .company-card__content {
@@ -235,12 +212,7 @@
 
   border-radius: 12px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #eef2ff,
-      #e0e7ff
-    );
+  background: linear-gradient(135deg, #eef2ff, #e0e7ff);
 
   color: var(--primary);
 
@@ -339,11 +311,8 @@
 
   background: var(--success);
 
-  box-shadow:
-    0 0 0 3px
-    rgb(22 163 74 / 10%);
+  box-shadow: 0 0 0 3px rgb(22 163 74 / 10%);
 }
-
 
 /* =========================================================
    FORM CARD
@@ -374,12 +343,7 @@
 
   border-bottom: 1px solid var(--border);
 
-  background:
-    linear-gradient(
-      180deg,
-      #ffffff,
-      #fcfdff
-    );
+  background: linear-gradient(180deg, #ffffff, #fcfdff);
 }
 
 .form-card__header h2 {
@@ -413,7 +377,6 @@
 
   white-space: nowrap;
 }
-
 
 /* =========================================================
    FORM
@@ -459,8 +422,7 @@
   font-size: 11px;
 }
 
-.form-field input,
-.form-field textarea {
+.form-field :is(input, textarea, select) {
   display: block;
 
   width: 100%;
@@ -495,6 +457,14 @@
   padding: 0 14px;
 }
 
+.form-field select {
+  width: 100%;
+
+  height: 46px;
+
+  padding: 0 14px;
+}
+
 .form-field textarea {
   min-height: 180px;
 
@@ -508,20 +478,16 @@
   color: #a8b2c1;
 }
 
-.form-field input:hover,
-.form-field textarea:hover {
+.form-field :is(input, textarea, select):hover {
   border-color: #aeb9c9;
 }
 
-.form-field input:focus,
-.form-field textarea:focus {
+.form-field :is(input, textarea, select):focus {
   border-color: var(--primary);
 
   background: #fff;
 
-  box-shadow:
-    0 0 0 3px
-    rgb(79 70 229 / 10%);
+  box-shadow: 0 0 0 3px rgb(79 70 229 / 10%);
 }
 
 .field-hint {
@@ -548,7 +514,6 @@
   font-weight: 500;
 }
 
-
 /* =========================================================
    DIVIDER
    ========================================================= */
@@ -560,7 +525,6 @@
 
   background: var(--border);
 }
-
 
 /* =========================================================
    FOOTER
@@ -615,7 +579,6 @@
   gap: 10px;
 }
 
-
 /* =========================================================
    BUTTONS
    ========================================================= */
@@ -633,7 +596,7 @@
 
   padding: 0 16px;
 
-  border: 1px solid transparent;
+  border: 2px solid transparent;
 
   border-radius: var(--radius-sm);
 
@@ -654,6 +617,11 @@
 
   &:active:not(:disabled) {
     transform: translateY(1px);
+  }
+
+  &:focus-visible {
+    outline: 3px solid rgb(37 99 235 / 30%);
+    outline-offset: 2px;
   }
 
   &:disabled {
@@ -682,35 +650,30 @@
 .button--primary {
   min-width: 140px;
 
+  border-color: var(--primary);
+
   background: var(--primary);
 
   color: #fff;
 
-  box-shadow:
-    0 1px 2px
-    rgb(79 70 229 / 20%);
+  box-shadow: 0 1px 2px rgb(79 70 229 / 20%);
 
   &:hover:not(:disabled) {
     background: var(--primary-hover);
 
-    box-shadow:
-      0 4px 10px
-      rgb(79 70 229 / 20%);
+    box-shadow: 0 4px 10px rgb(79 70 229 / 20%);
   }
 }
 
 .button-arrow {
   font-size: 16px;
 
-  transition:
-    transform 150ms ease;
+  transition: transform 150ms ease;
 }
 
-.button--primary:hover
-.button-arrow {
+.button--primary:hover .button-arrow {
   transform: translateX(3px);
 }
-
 
 /* =========================================================
    ALERT
@@ -773,7 +736,6 @@
   font-size: 12px;
 }
 
-
 /* =========================================================
    LOADING
    ========================================================= */
@@ -793,21 +755,13 @@
 
   inset: 0;
 
-  content: "";
+  content: '';
 
   transform: translateX(-100%);
 
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgb(255 255 255 / 60%),
-      transparent
-    );
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 60%), transparent);
 
-  animation:
-    skeleton-loading 1.4s
-    infinite;
+  animation: skeleton-loading 1.4s infinite;
 }
 
 .skeleton--title {
@@ -835,7 +789,6 @@
   }
 }
 
-
 /* =========================================================
    SAVING
    ========================================================= */
@@ -844,15 +797,13 @@
   width: 14px;
   height: 14px;
 
-  border: 2px solid
-    rgb(255 255 255 / 35%);
+  border: 2px solid rgb(255 255 255 / 35%);
 
   border-top-color: white;
 
   border-radius: 50%;
 
-  animation:
-    spinner 650ms linear infinite;
+  animation: spinner 650ms linear infinite;
 }
 
 @keyframes spinner {
@@ -861,19 +812,14 @@
   }
 }
 
-
 /* =========================================================
    RESPONSIVE
    ========================================================= */
 
 @media (max-width: 700px) {
-
   .page-content,
   .page-header {
-    width: min(
-      calc(100% - 28px),
-      960px
-    );
+    width: min(calc(100% - 28px), 960px);
   }
 
   .page-header {
@@ -920,7 +866,6 @@
 }
 
 @media (max-width: 480px) {
-
   .page-content,
   .page-header {
     width: calc(100% - 20px);

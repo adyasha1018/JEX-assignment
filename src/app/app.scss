@@ -2,16 +2,11 @@
   min-height: 100vh;
 
   background:
-    radial-gradient(
-      circle at 50% -20%,
-      rgb(99 102 241 / 7%),
-      transparent 35%
-    ),
+    radial-gradient(circle at 50% -20%, rgb(99 102 241 / 7%), transparent 35%),
     var(--color-background);
 
   color: var(--color-text-primary);
 }
-
 
 .app-header {
   position: sticky;
@@ -20,31 +15,24 @@
 
   z-index: 100;
 
-  border-bottom: 1px solid
-    rgb(226 232 240 / 80%);
+  border-bottom: 1px solid rgb(226 232 240 / 80%);
 
-  background:
-    rgb(255 255 255 / 90%);
+  background: rgb(255 255 255 / 90%);
 
   backdrop-filter: blur(12px);
 }
-
 
 .app-header__inner {
   display: flex;
 
   align-items: center;
 
-  width: min(
-    calc(100% - 48px),
-    var(--content-width)
-  );
+  width: min(calc(100% - 48px), var(--content-width));
 
   height: 68px;
 
   margin-inline: auto;
 }
-
 
 .app-brand {
   display: flex;
@@ -58,7 +46,6 @@
   text-decoration: none;
 }
 
-
 .app-brand__logo {
   display: flex;
 
@@ -70,12 +57,7 @@
 
   border-radius: 9px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #6366f1,
-      #4f46e5
-    );
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
 
   color: white;
 
@@ -83,11 +65,8 @@
 
   font-weight: 800;
 
-  box-shadow:
-    0 4px 10px
-    rgb(79 70 229 / 20%);
+  box-shadow: 0 4px 10px rgb(79 70 229 / 20%);
 }
-
 
 .app-brand__name {
   font-size: 16px;
@@ -97,7 +76,6 @@
   letter-spacing: -0.02em;
 }
 
-
 .app-navigation {
   display: flex;
 
@@ -105,7 +83,6 @@
 
   margin-left: 48px;
 }
-
 
 .app-navigation a {
   position: relative;
@@ -137,7 +114,7 @@
 
     height: 2px;
 
-    content: "";
+    content: '';
 
     transform: scaleX(0);
 
@@ -156,7 +133,6 @@
   }
 }
 
-
 .app-user {
   display: flex;
 
@@ -166,7 +142,6 @@
 
   margin-left: auto;
 }
-
 
 .app-user__avatar {
   display: flex;
@@ -188,7 +163,6 @@
   font-weight: 700;
 }
 
-
 .app-user__details {
   display: flex;
 
@@ -197,13 +171,11 @@
   gap: 1px;
 }
 
-
 .app-user__details strong {
   color: var(--color-text-primary);
 
   font-size: 12px;
 }
-
 
 .app-user__details span {
   color: var(--color-text-muted);
@@ -211,14 +183,11 @@
   font-size: 10px;
 }
 
-
 .app-main {
   min-height: calc(100vh - 68px);
 }
 
-
 @media (max-width: 600px) {
-
   .app-header__inner {
     width: calc(100% - 28px);
   }

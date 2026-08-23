@@ -1,77 +1,52 @@
 <section class="companies-page">
-
   <header class="page-header">
-
     <div>
       <h1>Companies</h1>
 
-      <p>
-        Manage companies and their job vacancies.
-      </p>
+      <p>Manage organizations that currently have open vacancies.</p>
     </div>
 
-    <a
-      routerLink="/companies/new"
-      class="button primary"
-    >
+    <a routerLink="/companies/new" class="button primary">
+      <span class="button-icon" aria-hidden="true">+</span>
       Add company
     </a>
-
   </header>
 
-
   @if (loading()) {
-
-    <p class="status">
-      Loading companies...
-    </p>
-
+    <p class="status">Loading companies...</p>
   }
 
-
   @if (error()) {
-
     <p class="status error">
       {{ error() }}
     </p>
-
   }
 
-
   @if (!loading() && !error()) {
-
     @if (companies().length === 0) {
-
       <div class="empty-state">
-
         <h2>No companies</h2>
 
-        <p>
-          There are currently no companies.
-        </p>
+        <p>There are currently no companies.</p>
 
-        <a
-          routerLink="/companies/new"
-          class="button primary"
-        >
+        <a routerLink="/companies/new" class="button primary">
+          <span class="button-icon" aria-hidden="true">+</span>
           Add company
         </a>
-
       </div>
+    } @else if (filteredCompanies().length === 0) {
+      <div class="empty-state">
+        <div class="empty-state__icon">⌕</div>
 
+        <h2>No companies with vacancies found</h2>
+
+        <p>Try adjusting your search criteria.</p>
+      </div>
     } @else {
-
       <div class="company-list">
-
-        @for (
-          company of companies();
-          track company.id
-        ) {
-
+        @for (company of filteredCompanies(); track company.id) {
           <article class="company-card">
-
             <div class="company-info">
-
               <h2>
                 {{ company.name }}
               </h2>
@@ -79,52 +54,27 @@
               <p>
                 {{ company.address }}
               </p>
-
             </div>
 
-
             <div class="actions">
-
-              <a
-                [routerLink]="[
-                  '/companies',
-                  company.id,
-                  'vacancies'
-                ]"
-                class="button primary"
-              >
-                View vacancies
+              <a class="button primary" [routerLink]="['/companies', company.id, 'vacancies']">
+                <span class="button-icon" aria-hidden="true">&#128065;</span>
+                Vacancies ({{ getVacancyCount(company.id) }})
               </a>
 
-              <a
-                [routerLink]="[
-                  '/companies',
-                  company.id,
-                  'edit'
-                ]"
-                class="button"
-              >
+              <a class="button" [routerLink]="['/companies', company.id, 'edit']">
+                <span class="button-icon" aria-hidden="true">&#128394;</span>
                 Edit
               </a>
 
-              <button
-                type="button"
-                class="button danger"
-                (click)="deleteCompany(company)"
-              >
+              <button type="button" class="button danger" (click)="deleteCompany(company)">
+                <span class="button-icon" aria-hidden="true">&#128465;</span>
                 Delete
               </button>
-
             </div>
-
           </article>
-
         }
-
       </div>
-
     }
-
   }
-
 </section>

@@ -1,19 +1,18 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { distinctUntilChanged, of, switchMap } from 'rxjs';
+
+import { AppErrorService } from '../../../core/services/app-error.service';
 import { CompanyService } from '../../../core/services/company.service';
+import { areRouteParamsEqual, getRouteParam } from '../../../shared/utils/route-entity';
 
 @Component({
   selector: 'app-company-form',
   imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './company-form.component.html',
-  styleUrl: './company-form.component.scss'
+  styleUrl: './company-form.component.scss',
 })
 export class CompanyFormComponent {
   private readonly fb = inject(FormBuilder);
@@ -21,83 +20,64 @@ export class CompanyFormComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly appError = inject(AppErrorService);
 
   readonly companyForm = this.fb.nonNullable.group({
     name: ['', Validators.required],
-    address: ['', Validators.required]
+    address: ['', Validators.required],
   });
 
- readonly companyId = signal<string | null>(null);
-
+  readonly companyId = signal<string | null>(null);
   readonly loading = signal(false);
   readonly saving = signal(false);
   readonly error = signal('');
 
-constructor() {
-  this.route.paramMap
-    .pipe(
-      distinctUntilChanged(
-        (previous, current) =>
-          previous.get('companyId') ===
-          current.get('companyId')
-      ),
+  constructor() {
+    this.route.paramMap
+      .pipe(
+        distinctUntilChanged((previous, current) =>
+          areRouteParamsEqual(previous, current, ['companyId']),
+        ),
+        switchMap((params) => {
+          const companyId = getRouteParam(params, 'companyId');
 
-      switchMap(params => {
-        const companyId = params.get('companyId');
+          this.companyId.set(companyId);
+          this.error.set('');
 
-        this.companyId.set(companyId);
-        this.error.set('');
+          if (!companyId) {
+            this.resetForm();
+            this.loading.set(false);
+            return of(null);
+          }
 
-        // /companies/new
-        if (!companyId) {
-          this.resetForm();
+          this.loading.set(true);
+          return this.companyService.getCompany(companyId);
+        }),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe({
+        next: (company) => {
+          if (!company) {
+            return;
+          }
+
+          this.companyForm.setValue({
+            name: company.name,
+            address: company.address,
+          });
           this.loading.set(false);
+        },
+        error: (error) => {
+          console.error('Failed to load company:', error);
+          this.error.set(this.appError.messageFromError(error, 'Unable to load the company.'));
+          this.loading.set(false);
+        },
+      });
+  }
 
-          return of(null);
-        }
-
-        // /companies/:companyId/edit
-        this.loading.set(true);
-
-        return this.companyService.getCompany(companyId);
-      }),
-
-      takeUntilDestroyed(this.destroyRef)
-    )
-    .subscribe({
-      next: company => {
-        if (!company) {
-          return;
-        }
-
-        this.companyForm.setValue({
-          name: company.name,
-          address: company.address
-        });
-
-        this.loading.set(false);
-      },
-
-      error: error => {
-        console.error(
-          'Failed to load company:',
-          error
-        );
-
-        this.error.set(
-          'Unable to load the company.'
-        );
-
-        this.loading.set(false);
-      }
-    });
-}
-
-
- get isEditMode(): boolean {
-  return this.companyId() !== null;
-}
-
+  get isEditMode(): boolean {
+    return this.companyId() !== null;
+  }
 
   onSubmit(): void {
     if (this.companyForm.invalid) {
@@ -121,28 +101,20 @@ constructor() {
     }
   }
 
-  private createCompany(data: {
-    name: string;
-    address: string;
-  }): void {
+  private createCompany(data: { name: string; address: string }): void {
     this.companyService.createCompany(data).subscribe({
       next: () => {
         this.router.navigate(['/companies']);
       },
-
-      error: error => {
+      error: (error) => {
         console.error('Failed to create company:', error);
-
-        this.error.set('Unable to create the company.');
+        this.error.set(this.appError.messageFromError(error, 'Unable to create the company.'));
         this.saving.set(false);
-      }
+      },
     });
   }
 
-  private updateCompany(data: {
-    name: string;
-    address: string;
-  }): void {
+  private updateCompany(data: { name: string; address: string }): void {
     const id = this.companyId();
 
     if (!id) {
@@ -152,31 +124,25 @@ constructor() {
     const company = {
       id,
       name: data.name,
-      address: data.address
+      address: data.address,
     };
 
-    console.log('Updating company:', company);
-
     this.companyService.updateCompany(company).subscribe({
-      next: updatedCompany => {
-        console.log('Updated company:', updatedCompany);
-
+      next: () => {
         this.router.navigate(['/companies']);
       },
-
-      error: error => {
+      error: (error) => {
         console.error('Failed to update company:', error);
-
-        this.error.set('Unable to update the company.');
+        this.error.set(this.appError.messageFromError(error, 'Unable to update the company.'));
         this.saving.set(false);
-      }
+      },
     });
   }
 
   private resetForm(): void {
     this.companyForm.reset({
       name: '',
-      address: ''
+      address: '',
     });
 
     this.saving.set(false);
